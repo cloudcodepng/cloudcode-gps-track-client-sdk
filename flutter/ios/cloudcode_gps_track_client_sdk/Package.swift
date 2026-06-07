@@ -2,21 +2,34 @@
 import PackageDescription
 
 let package = Package(
-    name: "traccar_client_sdk",
+    name: "cloudcode_gps_track_client_sdk",
     platforms: [
         .iOS("15.0")
     ],
     products: [
-        .library(name: "traccar-client-sdk", targets: ["traccar_client_sdk"])
+        .library(
+            name: "cloudcode_gps_track_client_sdk",
+            targets: ["cloudcode_gps_track_client_sdk"]
+        )
     ],
     dependencies: [
-        .package(url: "https://github.com/traccar/traccar-client-sdk.git", exact: "0.0.1")
+        .package(
+            url: "https://github.com/cloudcodepng/cloudcode-gps-track-client-sdk.git",
+            branch: "cloudcode/dev"
+        )
     ],
     targets: [
         .target(
-            name: "traccar_client_sdk",
+            name: "cloudcode_gps_track_client_sdk",
             dependencies: [
-                .product(name: "TraccarClientSDK", package: "traccar-client-sdk")
+                .product(
+                    name: "TraccarClientSDK",
+                    package: "cloudcode-gps-track-client-sdk"
+                )
+            ],
+            path: "Sources/cloudcode_gps_track_client_sdk",
+            resources: [
+                .process("PrivacyInfo.xcprivacy")
             ]
         )
     ]
