@@ -1,24 +1,33 @@
-// swift-tools-version:5.5
+// swift-tools-version: 5.9
 import PackageDescription
 
 let package = Package(
-    name: "TraccarClientSDK",
+    name: "cloudcode_gps_track_client_sdk",
     platforms: [
-        .iOS(.v15),
+        .iOS("15.0")
     ],
     products: [
-        .library(name: "TraccarClientSDK", targets: ["TraccarClientSDK", "TraccarClientAutoInit"]),
+        .library(
+            name: "cloudcode_gps_track_client_sdk",
+            targets: ["cloudcode_gps_track_client_sdk"]
+        )
+    ],
+    dependencies: [
+        .package(
+            url: "https://github.com/cloudcodepng/cloudcode-gps-track-client-sdk.git",
+            branch: "cloudcode/dev"
+        )
     ],
     targets: [
-        .binaryTarget(
-            name: "TraccarClientSDK",
-            path: "core/build/XCFrameworks/release/TraccarClientSDK.xcframework"
-        ),
         .target(
-            name: "TraccarClientAutoInit",
-            dependencies: ["TraccarClientSDK"],
-            path: "core/Sources/TraccarClientAutoInit",
-            publicHeadersPath: "include"
-        ),
+            name: "cloudcode_gps_track_client_sdk",
+            dependencies: [
+                .product(name: "TraccarClientSDK", package: "cloudcode-gps-track-client-sdk")
+            ],
+            path: "Sources/cloudcode_gps_track_client_sdk",
+            resources: [
+                .process("PrivacyInfo.xcprivacy")
+            ]
+        )
     ]
 )
