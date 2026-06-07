@@ -1,7 +1,7 @@
-name: traccar_client_sdk
-description: "Flutter plugin for background location tracking. Wraps the Traccar Client SDK for Android and iOS."
+name: cloudcode_gps_track_client_sdk
+description: "Flutter plugin for background location tracking. Wraps the Cloudcode GPS Tracking Client SDK for Android and iOS."
 version: 0.0.15
-repository: https://github.com/traccar/traccar-client-sdk
+repository: https://github.com/cloudcodepng/cloudcode-gps-track-client-sdk
 
 environment:
   sdk: ^3.11.5

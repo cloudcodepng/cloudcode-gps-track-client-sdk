@@ -70,6 +70,7 @@ public class TraccarClientSdkPlugin: NSObject, FlutterPlugin {
     return Config(
       serverUrl: args["serverUrl"] as! String,
       deviceId: args["deviceId"] as! String,
+
       location: LocationConfig(
         accuracy: parseAccuracy(location["accuracy"] as! String),
         distanceMeters: Int32(location["distanceMeters"] as! Int),
@@ -77,8 +78,12 @@ public class TraccarClientSdkPlugin: NSObject, FlutterPlugin {
         angleDegrees: Int32(location["angleDegrees"] as! Int),
         stopDetection: location["stopDetection"] as! Bool,
         stopTimeoutSeconds: Int32(location["stopTimeoutSeconds"] as! Int),
-        stationaryRadiusMeters: Int32(location["stationaryRadiusMeters"] as! Int)
+        stationaryRadiusMeters: Int32(location["stationaryRadiusMeters"] as! Int),
+        //suthzy, 08th jun 2026, add heartbeatIntervalSeconds
+        heartbeatIntervalSeconds: Int32(location["heartbeatIntervalSeconds"] as? Int ?? 0)
+
       ),
+
       wakeLock: args["wakeLock"] as! Bool,
       buffer: args["buffer"] as! Bool,
       notification: NotificationConfig(text: notification["text"] as! String)
