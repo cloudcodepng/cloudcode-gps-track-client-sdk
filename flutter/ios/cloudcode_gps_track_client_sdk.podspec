@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Cloudcode PNG Limited' => 'support@cloudcode.com.pg' }
   s.source           = { :path => '.' }
   s.source_files     = 'traccar_client_sdk/Sources/traccar_client_sdk/**/*'
-  s.dependency       = 'Flutter'
+  s.dependency 'Flutter'
   s.platform         = :ios, '15.0'
   s.swift_version    = '5.0'
 end
