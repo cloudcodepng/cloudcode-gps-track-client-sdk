@@ -1,3 +1,5 @@
+@file:OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+
 package org.traccar.client
 
 import kotlinx.coroutines.CoroutineScope
