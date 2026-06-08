@@ -1,0 +1,8 @@
+framework module "TraccarClientSDK" {
+    umbrella header "TraccarClientSDK.h"
+
+    export *
+    module * { export * }
+
+    use Foundation
+}
