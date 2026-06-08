@@ -90,6 +90,18 @@ class LogEntry {
 /// Entry point for the Traccar Client SDK Flutter plugin.
 class TraccarClientSdk {
   static const MethodChannel _channel = MethodChannel('traccar_client_sdk');
+  
+  //suthzy, 08th jun 2026, add _toBool to convert dynamic to bool
+  bool _toBool(dynamic value) {
+    if (value is bool) return value;
+    if (value is int) return value != 0;
+    if (value is num) return value != 0;
+    if (value is String) {
+      final normalized = value.toLowerCase().trim();
+      return normalized == 'true' || normalized == '1' || normalized == 'yes';
+    }
+    return false;
+  }
 
   /// Starts background location tracking with [config]. Throws a
   /// [PlatformException] if required permissions were denied or another
@@ -104,16 +116,32 @@ class TraccarClientSdk {
   /// whether the upload succeeded. Works independently of [start] / [stop];
   /// on Android the call must originate from a context allowed to receive
   /// location (foreground activity or high-priority FCM message handler).
+
+  //suthzy, 08th jun 2026, add requestPosition to request a single position fix and upload it to the server
+  /*
   Future<bool> requestPosition(Config config) async {
     final result =
         await _channel.invokeMethod<bool>('requestPosition', config._toMap());
     return result ?? false;
+  }*/
+
+  Future<bool> requestPosition(Config config) async {
+    final result =
+        await _channel.invokeMethod<dynamic>('requestPosition', config._toMap());
+    return _toBool(result);
   }
 
   /// Returns whether tracking is currently active.
+  //suthzy, 08th jun 2026, add isTracking to return whether tracking is currently active
+  /*
   Future<bool> isTracking() async {
     final result = await _channel.invokeMethod<bool>('isTracking');
     return result ?? false;
+  }
+  */
+  Future<bool> isTracking() async {
+    final result = await _channel.invokeMethod<dynamic>('isTracking');
+    return _toBool(result);
   }
 
   /// Returns recent diagnostic entries, oldest first.
