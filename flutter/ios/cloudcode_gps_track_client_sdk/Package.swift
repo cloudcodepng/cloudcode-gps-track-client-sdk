@@ -8,7 +8,7 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "cloudcode_gps_track_client_sdk",
+            name: "cloudcode-gps-track-client-sdk",
             targets: ["cloudcode_gps_track_client_sdk"]
         )
     ],
