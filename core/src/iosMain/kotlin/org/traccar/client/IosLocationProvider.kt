@@ -44,6 +44,8 @@ class IosLocationProvider(
     private val config: LocationConfig = config.effective
 
     private var locationManager: CLLocationManager? = null
+    //suthzy, 08th June 2026, added locationDelegate variable
+    private var locationDelegate: CLLocationManagerDelegateProtocol? = null
     private var activityManager: CMMotionActivityManager? = null
     private var emit: ((Position) -> Unit)? = null
     private var lastLocation: CLLocation? = null
@@ -86,9 +88,23 @@ class IosLocationProvider(
                 }
             }
         }
-
+        //suthzy, 8th June 2026, commented and updated locationDelegate
+        /*
         val manager = CLLocationManager().apply {
             this.delegate = delegate
+            desiredAccuracy = config.accuracy.toIosAccuracy()
+            distanceFilter = if (config.distanceMeters == 0) {
+                kCLDistanceFilterNone
+            } else {
+                config.distanceMeters.toDouble()
+            }
+            allowsBackgroundLocationUpdates = true
+        }
+        */
+        locationDelegate = delegate
+
+        val manager = CLLocationManager().apply {
+            this.delegate = locationDelegate
             desiredAccuracy = config.accuracy.toIosAccuracy()
             distanceFilter = if (config.distanceMeters == 0) {
                 kCLDistanceFilterNone
@@ -145,6 +161,8 @@ class IosLocationProvider(
         }
         manager?.delegate = null
         locationManager = null
+        //suthzy, 08th June 2026, clear locationDelegate mem
+        locationDelegate = null
         scope?.cancel()
         scope = null
         emit = null
