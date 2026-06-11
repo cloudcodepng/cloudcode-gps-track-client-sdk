@@ -72,6 +72,7 @@ class TrackerService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
+    /* 
     private fun startInForeground(settings: NotificationConfig) {
         val notification = buildNotification(settings)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -87,7 +88,37 @@ class TrackerService : Service() {
             .setContentText(settings.text)
             .setOngoing(true)
             .build()
-
+    */
+    private fun startInForeground(settings: NotificationConfig) {
+        ensureNotificationChannel(this)
+    
+        val notification = buildNotification(settings)
+    
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(
+                NOTIFICATION_ID,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
+            )
+        } else {
+            startForeground(NOTIFICATION_ID, notification)
+        }
+    }
+    
+    private fun buildNotification(settings: NotificationConfig): Notification {
+        val notificationText = settings.text.ifBlank {
+            "Continuous GPS tracking is active"
+        }
+    
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_tracker_notification)
+            .setContentTitle("CloudLink")
+            .setContentText(notificationText)
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .build()
+    }
     companion object {
         private const val CHANNEL_ID = "tracker"
         private const val NOTIFICATION_ID = 0x7AC0
