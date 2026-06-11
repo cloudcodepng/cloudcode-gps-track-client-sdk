@@ -16,7 +16,7 @@ import org.traccar.client.Config
 import org.traccar.client.LocationConfig
 import org.traccar.client.NotificationConfig
 import org.traccar.client.sharedTracker
-import org.traccar.client.startTracking
+//import org.traccar.client.startTracking
 
 class TraccarClientSdkPlugin :
     FlutterPlugin,
@@ -34,8 +34,13 @@ class TraccarClientSdkPlugin :
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
+            /*
             "start" -> scope.launchHandler(result) {
                 sharedTracker().startTracking(context, parseConfig(call.arguments as Map<*, *>))
+                null
+            }*/
+            "start" -> scope.launchHandler(result) {
+                sharedTracker().start(parseConfig(call.arguments as Map<*, *>))
                 null
             }
             "stop" -> scope.launchHandler(result) {
